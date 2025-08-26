@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Selenium Practice Demo</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 30px;
+            background: linear-gradient(120deg, #f8fafc 0%, #e0e7ef 100%);
+            color: #222;
+        }
+        h1 {
+            text-align: center;
+            color: #2d6cdf;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+        }
+        section {
+            margin-bottom: 40px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(44, 62, 80, 0.08);
+            padding: 28px 32px 24px 32px;
+            max-width: 520px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        h2 {
+            color: #2d6cdf;
+            margin-top: 0;
+            margin-bottom: 18px;
+            font-size: 1.3em;
+        }
+        label {
+            display: block;
+            margin-top: 14px;
+            font-weight: 500;
+        }
+        input[type="text"], input[type="password"], input[type="email"], select, textarea {
+            margin-top: 5px;
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #bfc9d1;
+            border-radius: 6px;
+            font-size: 1em;
+            background: #f7fafc;
+            transition: border 0.2s;
+        }
+        input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, select:focus, textarea:focus {
+            border: 1.5px solid #2d6cdf;
+            outline: none;
+            background: #fff;
+        }
+        input[type="radio"], input[type="checkbox"] {
+            margin-right: 6px;
+            accent-color: #2d6cdf;
+        }
+        button {
+            margin-top: 16px;
+            padding: 9px 22px;
+            background: linear-gradient(90deg, #2d6cdf 60%, #4e9cff 100%);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(44, 108, 223, 0.08);
+            transition: background 0.2s, transform 0.1s;
+        }
+        button:hover {
+            background: linear-gradient(90deg, #1b4e9b 60%, #2d6cdf 100%);
+            transform: translateY(-2px) scale(1.03);
+        }
+        #loginMessage, #regMessage, #fileMessage, #promptResult {
+            margin-top: 14px;
+            font-size: 1em;
+            min-height: 22px;
+            color: #2d6cdf;
+            font-weight: 500;
+        }
+        table {
+            width: 100%;
+            border: none;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 6px rgba(44, 62, 80, 0.07);
+            margin-top: 10px;
+        }
+        th, td {
+            border: none;
+            padding: 10px 14px;
+            text-align: left;
+        }
+        th {
+            background: #eaf2fb;
+            color: #2d6cdf;
+            font-weight: 600;
+        }
+        tr:nth-child(even) td {
+            background: #f7fafc;
+        }
+        tr:nth-child(odd) td {
+            background: #fff;
+        }
+        #fileInput {
+            margin-top: 8px;
+        }
+        @media (max-width: 600px) {
+            section {
+                padding: 16px 8px 14px 8px;
+                max-width: 98vw;
+            }
+            h1 {
+                font-size: 1.3em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Selenium Practice Demo Website</h1>
+
+    <section id="login-section">
+        <h2>Login Form</h2>
+        <form id="loginForm">
+            <label>Username: <input type="text" name="username" id="username"></label>
+            <label>Password: <input type="password" name="password" id="password"></label>
+            <button type="submit" id="loginBtn">Login</button>
+        </form>
+        <div id="loginMessage"></div>
+    </section>
+
+    <section id="form-section">
+        <h2>Registration Form</h2>
+        <form id="regForm">
+            <label>Name: <input type="text" name="name" id="name"></label>
+            <label>Email: <input type="email" name="email" id="email"></label>
+            <label>Gender:
+                <input type="radio" name="gender" value="male"> Male
+                <input type="radio" name="gender" value="female"> Female
+            </label>
+            <label>Country:
+                <select name="country" id="country">
+                    <option value="">Select</option>
+                    <option value="India">India</option>
+                    <option value="USA">USA</option>
+                    <option value="UK">UK</option>
+                </select>
+            </label>
+            <label>
+                <input type="checkbox" name="terms" id="terms"> I accept the terms
+            </label>
+            <button type="submit" id="registerBtn">Register</button>
+        </form>
+        <div id="regMessage"></div>
+    </section>
+
+    <section id="table-section">
+        <h2>Sample Table</h2>
+        <table id="sampleTable">
+            <thead>
+                <tr>
+                    <th>ID</th><th>Name</th><th>Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>1</td><td>Alice</td><td>Admin</td></tr>
+                <tr><td>2</td><td>Bob</td><td>User</td></tr>
+                <tr><td>3</td><td>Charlie</td><td>Guest</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="alert-section">
+        <h2>Alert & Prompt</h2>
+        <button onclick="showAlert()">Show Alert</button>
+        <button onclick="showPrompt()">Show Prompt</button>
+        <div id="promptResult"></div>
+    </section>
+
+    <section id="dynamic-section">
+        <h2>Dynamic Content</h2>
+        <button id="addRowBtn">Add Row to Table</button>
+        <button id="removeRowBtn">Remove Last Row</button>
+    </section>
+
+    <section id="file-section">
+        <h2>File Upload</h2>
+        <input type="file" id="fileInput">
+        <button id="uploadBtn">Upload</button>
+        <div id="fileMessage"></div>
+    </section>
+
+    <script>
+        // Login
+        document.getElementById('loginForm').onsubmit = function(e) {
+            e.preventDefault();
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            if(user === 'admin' && pass === 'admin') {
+                document.getElementById('loginMessage').textContent = 'Login successful!';
+            } else {
+                document.getElementById('loginMessage').textContent = 'Invalid credentials.';
+            }
+        };
+
+        // Registration
+        document.getElementById('regForm').onsubmit = function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const terms = document.getElementById('terms').checked;
+            if(name && email && terms) {
+                document.getElementById('regMessage').textContent = 'Registration successful!';
+            } else {
+                document.getElementById('regMessage').textContent = 'Please fill all fields and accept terms.';
+            }
+        };
+
+        // Alert & Prompt
+        function showAlert() {
+            alert('This is a Selenium alert test!');
+        }
+        function showPrompt() {
+            const res = prompt('Enter your favorite language:');
+            document.getElementById('promptResult').textContent = res ? `You entered: ${res}` : '';
+        }
+
+        // Dynamic Table Row
+        document.getElementById('addRowBtn').onclick = function() {
+            const table = document.getElementById('sampleTable').getElementsByTagName('tbody')[0];
+            const rowCount = table.rows.length + 1;
+            const row = table.insertRow();
+            row.insertCell(0).textContent = rowCount;
+            row.insertCell(1).textContent = 'User' + rowCount;
+            row.insertCell(2).textContent = 'Role' + rowCount;
+        };
+        document.getElementById('removeRowBtn').onclick = function() {
+            const table = document.getElementById('sampleTable').getElementsByTagName('tbody')[0];
+            if(table.rows.length > 0) table.deleteRow(table.rows.length - 1);
+        };
+
+        // File Upload
+        document.getElementById('uploadBtn').onclick = function() {
+            const fileInput = document.getElementById('fileInput');
+            if(fileInput.files.length > 0) {
+                document.getElementById('fileMessage').textContent = 'File uploaded: ' + fileInput.files[0].name;
+            } else {
+                document.getElementById('fileMessage').textContent = 'No file selected.';
+            }
+        };
+    </script>
+</body>
+</html>
